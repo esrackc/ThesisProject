@@ -1,0 +1,64 @@
+SARAH WILLIAMS
+Data Scientist & ML Engineer
+
+Contact Information:
+Email: sarah.williams@techmail.com
+Phone: +1 (555) 987-6543
+Location: Boston, MA
+GitHub: github.com/sarahwilliams
+
+PROFESSIONAL SUMMARY
+Results-driven Data Scientist with 7 years of experience in machine learning, statistical analysis, and predictive modeling. Proven track record of delivering data-driven solutions that drive business growth and operational efficiency.
+
+SKILLS
+- Programming: Python, R, SQL, Scala
+- ML/AI: TensorFlow, PyTorch, Scikit-learn, Keras
+- Data Analysis: Pandas, NumPy, Matplotlib, Seaborn
+- Big Data: Spark, Hadoop, Kafka
+- Cloud: AWS (SageMaker, EMR), Google Cloud Platform
+- Databases: PostgreSQL, MongoDB, Redis
+- Tools: Jupyter, Git, Docker, Kubernetes
+
+WORK EXPERIENCE
+
+Senior Data Scientist | DataTech Solutions
+March 2020 - Present
+- Developed ML models improving customer retention by 35%
+- Built recommendation systems serving 5M+ daily active users
+- Led team of 4 data scientists on predictive analytics projects
+- Deployed production ML pipelines processing 10TB+ data daily
+- Presented insights to C-level executives driving strategic decisions
+
+Data Scientist | Analytics Corp
+July 2017 - February 2020
+- Created predictive models for fraud detection with 95% accuracy
+- Implemented A/B testing framework used across organization
+- Automated data pipelines reducing processing time by 70%
+- Collaborated with product teams on feature development
+
+EDUCATION
+Ph.D. in Statistics
+Stanford University
+Graduated: 2017
+
+M.S. in Computer Science
+University of California, Berkeley
+Graduated: 2015
+
+B.S. in Mathematics
+UCLA
+Graduated: 2013
+
+PUBLICATIONS
+- "Advanced Techniques in Predictive Modeling" - Journal of ML Research, 2021
+- "Scalable Machine Learning Systems" - Data Science Conference, 2020
+
+LANGUAGES
+- English (Native)
+- Mandarin (Professional)
+- German (Basic)
+
+CERTIFICATIONS
+- AWS Certified Machine Learning - Specialty
+- TensorFlow Developer Certificate
+- Google Professional Data Engineer

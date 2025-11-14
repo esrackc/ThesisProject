@@ -1,0 +1,386 @@
+// Prisma Schema for AI-Powered HR Management System
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// User Management
+// ============================================
+
+enum UserRole {
+  ADMIN
+  HR_MANAGER
+  RECRUITER
+  INTERVIEWER
+  EMPLOYEE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  password      String
+  firstName     String
+  lastName      String
+  role          UserRole   @default(RECRUITER)
+  status        UserStatus @default(ACTIVE)
+  phoneNumber   String?
+  profileImage  String?
+  department    String?
+  position      String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  lastLoginAt   DateTime?
+
+  // Relations
+  createdJobs      Job[]           @relation("JobCreator")
+  interviews       Interview[]     @relation("Interviewer")
+  activities       ActivityLog[]
+  notifications    Notification[]
+
+  @@map("users")
+}
+
+// ============================================
+// Job Management
+// ============================================
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+  CANCELLED
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  TEMPORARY
+}
+
+enum ExperienceLevel {
+  ENTRY_LEVEL
+  JUNIOR
+  MID_LEVEL
+  SENIOR
+  LEAD
+  EXECUTIVE
+}
+
+model Job {
+  id                String          @id @default(uuid())
+  title             String
+  description       String
+  requirements      String[]
+  responsibilities  String[]
+  skills            String[]
+  department        String
+  location          String
+  jobType           JobType
+  experienceLevel   ExperienceLevel
+  salaryMin         Int?
+  salaryMax         Int?
+  status            JobStatus       @default(DRAFT)
+  postedAt          DateTime?
+  closedAt          DateTime?
+  createdById       String
+  createdBy         User            @relation("JobCreator", fields: [createdById], references: [id])
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  // Relations
+  applications      Application[]
+  
+  @@index([status, postedAt])
+  @@index([department])
+  @@map("jobs")
+}
+
+// ============================================
+// Candidate Management
+// ============================================
+
+enum CandidateStatus {
+  NEW
+  REVIEWING
+  SHORTLISTED
+  INTERVIEWING
+  OFFERED
+  HIRED
+  REJECTED
+  WITHDRAWN
+}
+
+model Candidate {
+  id                String          @id @default(uuid())
+  email             String          @unique
+  firstName         String
+  lastName          String
+  phoneNumber       String?
+  location          String?
+  currentCompany    String?
+  currentPosition   String?
+  yearsOfExperience Int?
+  education         Json[]          // Array of education objects
+  skills            String[]
+  resumeUrl         String?
+  linkedinUrl       String?
+  portfolioUrl      String?
+  source            String?         // How they found the job
+  aiParsedData      Json?           // AI-extracted resume data
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  // Relations
+  applications      Application[]
+  
+  @@index([email])
+  @@map("candidates")
+}
+
+// ============================================
+// Application Tracking
+// ============================================
+
+enum ApplicationStatus {
+  APPLIED
+  SCREENING
+  PHONE_SCREEN
+  TECHNICAL_TEST
+  INTERVIEWING
+  FINAL_ROUND
+  OFFER_EXTENDED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+model Application {
+  id              String            @id @default(uuid())
+  jobId           String
+  job             Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidateId     String
+  candidate       Candidate         @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  status          ApplicationStatus @default(APPLIED)
+  coverLetter     String?
+  appliedAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // AI Scoring
+  aiMatchScore    Float?            // 0-100 compatibility score
+  aiAnalysis      Json?             // AI-generated insights
+  
+  // Relations
+  interviews      Interview[]
+  feedback        Feedback[]
+  
+  @@unique([jobId, candidateId])
+  @@index([status, appliedAt])
+  @@map("applications")
+}
+
+// ============================================
+// Interview Management
+// ============================================
+
+enum InterviewType {
+  PHONE_SCREEN
+  VIDEO_CALL
+  IN_PERSON
+  TECHNICAL
+  HR_ROUND
+  FINAL_ROUND
+}
+
+enum InterviewStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
+  NO_SHOW
+}
+
+model Interview {
+  id              String          @id @default(uuid())
+  applicationId   String
+  application     Application     @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  interviewerId   String
+  interviewer     User            @relation("Interviewer", fields: [interviewerId], references: [id])
+  type            InterviewType
+  status          InterviewStatus @default(SCHEDULED)
+  scheduledAt     DateTime
+  duration        Int             // in minutes
+  location        String?         // Physical location or video link
+  notes           String?
+  rating          Int?            // 1-5 rating
+  aiSentiment     String?         // AI-analyzed sentiment
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([scheduledAt, status])
+  @@map("interviews")
+}
+
+// ============================================
+// Feedback & Evaluation
+// ============================================
+
+model Feedback {
+  id              String      @id @default(uuid())
+  applicationId   String
+  application     Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  rating          Int         // 1-5 stars
+  strengths       String[]
+  weaknesses      String[]
+  comments        String?
+  recommendation  String      // HIRE, MAYBE, REJECT
+  createdAt       DateTime    @default(now())
+
+  @@map("feedback")
+}
+
+// ============================================
+// Employee Management
+// ============================================
+
+enum EmploymentStatus {
+  ACTIVE
+  ON_LEAVE
+  TERMINATED
+  RESIGNED
+}
+
+model Employee {
+  id              String           @id @default(uuid())
+  employeeId      String           @unique // Company employee ID
+  email           String           @unique
+  firstName       String
+  lastName        String
+  dateOfBirth     DateTime?
+  gender          String?
+  phoneNumber     String?
+  address         String?
+  department      String
+  position        String
+  managerId       String?
+  hireDate        DateTime
+  salary          Float?
+  status          EmploymentStatus @default(ACTIVE)
+  terminationDate DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  performance     Performance[]
+  
+  @@index([department, status])
+  @@map("employees")
+}
+
+// ============================================
+// Performance Management
+// ============================================
+
+model Performance {
+  id            String    @id @default(uuid())
+  employeeId    String
+  employee      Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  reviewPeriod  String    // e.g., "Q1 2024"
+  rating        Float     // 1-5 scale
+  goals         Json[]    // Array of goal objects
+  achievements  String[]
+  improvements  String[]
+  comments      String?
+  reviewDate    DateTime
+  createdAt     DateTime  @default(now())
+
+  @@index([employeeId, reviewDate])
+  @@map("performance")
+}
+
+// ============================================
+// Activity Logging
+// ============================================
+
+enum ActivityType {
+  USER_LOGIN
+  JOB_CREATED
+  JOB_UPDATED
+  JOB_DELETED
+  APPLICATION_RECEIVED
+  APPLICATION_UPDATED
+  INTERVIEW_SCHEDULED
+  INTERVIEW_COMPLETED
+  CANDIDATE_HIRED
+  CANDIDATE_REJECTED
+}
+
+model ActivityLog {
+  id          String       @id @default(uuid())
+  userId      String?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  type        ActivityType
+  description String
+  metadata    Json?
+  ipAddress   String?
+  createdAt   DateTime     @default(now())
+
+  @@index([userId, createdAt])
+  @@index([type, createdAt])
+  @@map("activity_logs")
+}
+
+// ============================================
+// Notifications
+// ============================================
+
+enum NotificationType {
+  APPLICATION_RECEIVED
+  INTERVIEW_SCHEDULED
+  INTERVIEW_REMINDER
+  APPLICATION_STATUS_CHANGED
+  NEW_MESSAGE
+  SYSTEM_ALERT
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  metadata  Json?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead, createdAt])
+  @@map("notifications")
+}
+
+// ============================================
+// System Settings
+// ============================================
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  category  String
+  updatedAt DateTime @updatedAt
+
+  @@map("system_settings")
+}

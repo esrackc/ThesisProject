@@ -1,0 +1,67 @@
+MIKE JOHNSON
+DevOps Engineer & Cloud Architect
+
+Contact Information:
+Email: mike.johnson@cloudpro.com
+Phone: +1 (555) 456-7890
+Location: Seattle, WA
+Portfolio: mikejohnson.dev
+
+PROFESSIONAL SUMMARY
+Certified DevOps Engineer with 6+ years of experience designing and implementing scalable cloud infrastructure. Expert in container orchestration, CI/CD pipelines, and infrastructure automation. Strong advocate for DevOps culture and best practices.
+
+SKILLS
+- Cloud Platforms: AWS, Azure, Google Cloud Platform
+- Containers: Docker, Kubernetes, Docker Swarm
+- CI/CD: Jenkins, GitLab CI, GitHub Actions, ArgoCD
+- Infrastructure as Code: Terraform, CloudFormation, Ansible
+- Monitoring: Prometheus, Grafana, ELK Stack, Datadog
+- Scripting: Bash, Python, Go
+- Version Control: Git, GitHub, GitLab
+- Databases: PostgreSQL, MySQL, MongoDB, Redis
+
+WORK EXPERIENCE
+
+Senior DevOps Engineer | CloudScale Inc.
+April 2021 - Present
+- Architected and deployed multi-region Kubernetes clusters serving 10M+ requests/day
+- Reduced infrastructure costs by 45% through optimization and rightsizing
+- Implemented zero-downtime deployment strategies across 50+ microservices
+- Built automated disaster recovery system with 99.99% uptime SLA
+- Mentored team of 5 DevOps engineers on cloud best practices
+
+DevOps Engineer | TechStart Solutions
+January 2019 - March 2021
+- Migrated legacy monolithic applications to microservices architecture
+- Created CI/CD pipelines reducing deployment time from hours to minutes
+- Implemented infrastructure monitoring and alerting systems
+- Automated infrastructure provisioning using Terraform and Ansible
+- Collaborated with development teams on containerization strategies
+
+Junior Systems Administrator | IT Services Co.
+June 2017 - December 2018
+- Managed Linux and Windows server infrastructure
+- Implemented backup and disaster recovery procedures
+- Automated routine tasks using Python and Bash scripts
+- Provided technical support for development teams
+
+EDUCATION
+Bachelor of Science in Information Technology
+University of Washington
+Graduated: 2017
+
+CERTIFICATIONS
+- AWS Certified Solutions Architect - Professional
+- Certified Kubernetes Administrator (CKA)
+- HashiCorp Certified: Terraform Associate
+- Google Cloud Professional Cloud Architect
+- Azure DevOps Engineer Expert
+
+LANGUAGES
+- English (Native)
+- Japanese (Intermediate)
+
+OPEN SOURCE CONTRIBUTIONS
+- Kubernetes: Core contributor (2020-present)
+- Terraform AWS Provider: Active contributor
+- Various DevOps tools and utilities on GitHub
