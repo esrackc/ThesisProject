@@ -297,9 +297,9 @@ Warsaw Management University
 
 ## Acknowledgments
 
-- OpenAI for GPT-4 API
 - Warsaw Management University
-- Thesis Supervisor: [Supervisor Name]
+- Thesis Supervisor: [Robert Zakrzewski]
+- Esra Cicek,77701
 
 ---
 
