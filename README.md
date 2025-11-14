@@ -291,6 +291,7 @@ MIT License - See LICENSE file for details
 ## Author
 
 **Engineering Thesis Project**  
+Esra Cicek,77701
 Department of Management and Technical Sciences  
 Field of Study: Computer Engineering  
 Warsaw Management University  
@@ -299,7 +300,6 @@ Warsaw Management University
 
 - Warsaw Management University
 - Thesis Supervisor: [Robert Zakrzewski]
-- Esra Cicek,77701
 
 ---
 
